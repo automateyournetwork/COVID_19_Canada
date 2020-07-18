@@ -1,0 +1,92 @@
+---
+
+- hosts: localhost
+
+# API Call using Ansible URI Module against api.covid19tracker.ca/fatalities #
+  tasks:
+    - name: GET Canada COVID 19 Canadian fatalities
+      uri:
+        url: https://api.covid19tracker.ca/fatalities
+        method: GET
+        headers: 
+          Connection: keep-alive
+          Accept: application/json 
+        return_content: yes
+        validate_certs: no
+        follow_redirects: yes
+      register: fatalities
+
+# Nested Loop over JSON response and capture fatalities info #
+    - name: "Get fatalities Info"
+      debug:
+        var: item
+      with_together: 
+        - "{{ fatalities.json | json_query('data[*].id') }}"
+        - "{{ fatalities.json | json_query('data[*].province') }}"
+        - "{{ fatalities.json | json_query('data[*].date') }}" 
+      register: fatalities_loop_output
+
+# Create CSV file with results #
+    - name: Create CSV
+      copy: content="{{ fatalities_loop_output | json_query('results[*].item') }}" dest=../reports/csv/fatalities.csv
+
+# Format CSV #
+    - name: Format CSV File New Lines
+      replace:
+        path: ../reports/csv/fatalities.csv
+        regexp: '],'
+        replace: ']\n'
+
+# Format CSV #
+    - name: Format CSV File Clean Up
+      replace:
+        path: ../reports/csv/fatalities.csv
+        regexp: '\[|\]|"'
+        replace: ''
+
+# Add Header Row to CSV #
+    - name: Header Row
+      lineinfile:
+        path: ../reports/csv/fatalities.csv
+        insertbefore: BOF
+        line: ID, Province, Date
+
+# Create Markdown file with results # 
+    - name: Create Markdown
+      copy: content="{{ fatalities_loop_output | json_query('results[*].item') }}" dest=../reports/markdown/fatalities.md
+
+# Format Markdown #
+    - name: Format Markdown File New Lines
+      replace:
+        path: ../reports/markdown/fatalities.md
+        regexp: '],'
+        replace: ']\n'
+
+# Format Markdown #
+    - name: Format Markdown File Clean Up
+      replace:
+        path: ../reports/markdown/fatalities.md
+        regexp: '\[|\]|"'
+        replace: ''      
+
+# Format Markdown #
+    - name: Format Markdown File Commas to Pipes
+      replace:
+        path: ../reports/markdown/fatalities.md
+        regexp: ','
+        replace: ' | '
+
+# Add Header Rows to Markdown #
+    - name: Header Row
+      lineinfile:
+        path: ../reports/markdown/fatalities.md
+        insertbefore: BOF
+        line: "{{ item.property }}"
+      with_items:
+        - { property: '| -- | -------- | ---- |'}
+        - { property: '| ID | Province | Date |'}
+
+# Create Mind Map # 
+    - name: create fatalities Mind Map 
+      shell: "markmap --no-open ../reports/markdown/fatalities.md -o ../reports/mindmap/fatalities.html"
+      register: markmap
