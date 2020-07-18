@@ -24,6 +24,9 @@
         - "{{ report.json | json_query('data[*].date') }}"
       register: report_loop_output
 
+    - debug:
+        msg: " {{report_loop_output}} "
+
 # Create CSV file with results #
     - name: Create CSV
       copy: content="{{ report_loop_output | json_query('results[*].item') }}" dest=../reports/csv/report.csv
