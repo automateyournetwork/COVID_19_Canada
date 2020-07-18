@@ -1,2 +1,4 @@
 # COVID_19_Canada
-A collection of Ansible playbooks that utilize the covid19tracker.ca API and generate CSV, Markdown, and Mindmap files based on the real-time data
+
+A repository for COVID-19 Canada Ansible playbooks using the Covid19tracker.ca API
+John Capobianco July 17,2020

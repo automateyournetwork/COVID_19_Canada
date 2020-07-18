@@ -1,0 +1,2 @@
+| Code | Province | Population | Area | GDP | Density | Last Updated |
+| ---- | -------- | ---------- | ---- | --- | ------- | ------------ |
