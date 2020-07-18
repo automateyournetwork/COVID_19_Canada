@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/d3@5"></script><script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.6.1/dist/view.min.js"></script>
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script>markmap.markmap('svg#mindmap',{"t":"root","d":0,"v":"","c":[{"t":"thead","d":1,"v":"","c":[{"t":"th","d":2,"v":"New Confirmed"},{"t":"th","d":2,"v":"Total Confirmed"},{"t":"th","d":2,"v":"New Deaths"},{"t":"th","d":2,"v":"Total Deaths"},{"t":"th","d":2,"v":"New Recovered"}]},{"t":"tbody","d":1,"v":"","c":[{"t":"td","d":2,"v":"241966"},{"t":"td","d":2,"v":"14054565"},{"t":"td","d":2,"v":"6742"},{"t":"td","d":2,"v":"596502"},{"t":"td","d":2,"v":"183365"}]}]}).fit()</script>
+</body>
+</html>

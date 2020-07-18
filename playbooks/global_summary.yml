@@ -1,0 +1,94 @@
+---
+
+- hosts: localhost
+
+# API Call using Ansible URI Module against https://api.covid19api.com/summary #
+  tasks:
+    - name: GET Global COVID 19 Summary
+      uri:
+        url: https://api.covid19api.com/summary
+        method: GET
+        headers: 
+          Connection: keep-alive
+          Accept: application/json 
+        return_content: yes
+        validate_certs: no
+        follow_redirects: yes
+      register: global_summary
+
+# Nested Loop over JSON response and capture summary info #
+    - name: "Get Global Summary Info"
+      debug:
+        var: item
+      with_nested: 
+        - "{{ global_summary.json | json_query('Global.NewConfirmed') }}"
+        - "{{ global_summary.json | json_query('Global.TotalConfirmed') }}"
+        - "{{ global_summary.json | json_query('Global.NewDeaths') }}"
+        - "{{ global_summary.json | json_query('Global.TotalDeaths') }}"
+        - "{{ global_summary.json | json_query('Global.NewRecovered') }}"
+      register: global_summary_loop_output
+
+# Create CSV file with results #
+    - name: Create CSV
+      copy: content="{{ global_summary_loop_output | json_query('results[*].item') }}" dest=../reports/csv/global_summary.csv
+
+# Format CSV #
+    - name: Format CSV File New Lines
+      replace:
+        path: ../reports/csv/global_summary.csv
+        regexp: '],'
+        replace: ']\n'
+
+# Format CSV #
+    - name: Format CSV File Clean Up
+      replace:
+        path: ../reports/csv/global_summary.csv
+        regexp: '\[|\]|"'
+        replace: ''
+
+# Add Header Row to CSV #
+    - name: Header Row
+      lineinfile:
+        path: ../reports/csv/global_summary.csv
+        insertbefore: BOF
+        line: New Confirmed, Total Confirmed, New Deaths, Total Deaths, New Recovered
+
+# Create Markdown file with results # 
+    - name: Create Markdown
+      copy: content="{{ global_summary_loop_output | json_query('results[*].item') }}" dest=../reports/markdown/global_summary.md
+
+# Format Markdown #
+    - name: Format Markdown File New Lines
+      replace:
+        path: ../reports/markdown/global_summary.md
+        regexp: '],'
+        replace: ']\n'
+
+# Format Markdown #
+    - name: Format Markdown File Clean Up
+      replace:
+        path: ../reports/markdown/global_summary.md
+        regexp: '\[|\]|"'
+        replace: ''      
+
+# Format Markdown #
+    - name: Format Markdown File Commas to Pipes
+      replace:
+        path: ../reports/markdown/global_summary.md
+        regexp: ','
+        replace: ' | '
+
+# Add Header Rows to Markdown #
+    - name: Header Row
+      lineinfile:
+        path: ../reports/markdown/global_summary.md
+        insertbefore: BOF
+        line: "{{ item.property }}"
+      with_items:
+        - { property: '| ------------- | --------------- | ---------- | ------------ | ------------- |' }
+        - { property: '| New Confirmed | Total Confirmed | New Deaths | Total Deaths | New Recovered |' }
+
+# Create Mind Map # 
+    - name: create Summary Mind Map 
+      shell: "markmap --no-open ../reports/markdown/global_summary.md -o ../reports/mindmap/global_summary.html"
+      register: markmap
