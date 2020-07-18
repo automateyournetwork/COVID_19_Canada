@@ -59,7 +59,7 @@
       lineinfile:
         path: ../reports/csv/report.csv
         insertbefore: BOF
-        line: Date, Change Cases, Change Fatalities, Change Tests, Change Hospitalizations, Change Criticals, Change Recoveries, Total Cases, Total Fatalities, Total Tests, Total Criticals, Total Recoveries
+        line: Date, Change Cases, Change Fatalities, Change Tests, Change Hospitalizations, Change Criticals, Change Recoveries, Total Cases, Total Fatalities, Total Tests, Total Hospitlizations, Total Criticals, Total Recoveries
 
 # Create Markdown file with results # 
     - name: Create Markdown
@@ -93,8 +93,8 @@
         insertbefore: BOF
         line: "{{ item.property }}"
       with_items:
-        - { property: '| ---- | ------------ | ----------------- | ------------ | ----------------------- | ---------------- | ----------------- | ----------- | ---------------- | ----------- | --------------- | ---------------- |' }
-        - { property: '| Date | Change Cases | Change Fatalities | Change Tests | Change Hospitalizations | Change Criticals | Change Recoveries | Total Cases | Total Fatalities | Total Tests | Total Criticals | Total Recoveries |' }
+        - { property: '| ---- | ------------ | ----------------- | ------------ | ----------------------- | ---------------- | ----------------- | ----------- | ---------------- | ----------- | ---------------------- | --------------- | ---------------- |' }
+        - { property: '| Date | Change Cases | Change Fatalities | Change Tests | Change Hospitalizations | Change Criticals | Change Recoveries | Total Cases | Total Fatalities | Total Tests | Total Hospitalizations | Total Criticals | Total Recoveries |' }
 
 # Create Mind Map # 
     - name: create Report Mind Map 
