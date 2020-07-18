@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/d3@5"></script><script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.6.1/dist/view.min.js"></script>
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script>markmap.markmap('svg#mindmap',{"t":"root","d":0,"v":"","c":[{"t":"thead","d":1,"v":"","c":[{"t":"th","d":2,"v":"Latest Date"},{"t":"th","d":2,"v":"Change Cases"},{"t":"th","d":2,"v":"Change Fatalities"},{"t":"th","d":2,"v":"Change Tests"},{"t":"th","d":2,"v":"Change Hospitalizations"},{"t":"th","d":2,"v":"Change Criticals"},{"t":"th","d":2,"v":"Change Recoveries"},{"t":"th","d":2,"v":"Total Cases"},{"t":"th","d":2,"v":"Total Fatalities"},{"t":"th","d":2,"v":"Total Tests"},{"t":"th","d":2,"v":"Total Criticals"},{"t":"th","d":2,"v":"Total Recoveries"}]},{"t":"tbody","d":1,"v":"","c":[{"t":"td","d":2,"v":"2020-07-18"},{"t":"td","d":2,"v":"205"},{"t":"td","d":2,"v":"7"},{"t":"td","d":2,"v":"40227"},{"t":"td","d":2,"v":"-15"},{"t":"td","d":2,"v":"2"},{"t":"td","d":2,"v":"220"},{"t":"td","d":2,"v":"111679"},{"t":"td","d":2,"v":"8881"},{"t":"td","d":2,"v":"3661139"},{"t":"td","d":2,"v":"64"},{"t":"td","d":2,"v":"96895"}]}]}).fit()</script>
+</body>
+</html>
