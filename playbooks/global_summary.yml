@@ -98,15 +98,15 @@
       debug:
         var: item
       with_nested:
-        - "{{ country_summary.json | json_query('Countries[*].Date') }}"        
-        - "{{ country_summary.json | json_query('Countries[*].Country') }}"
-        - "{{ country_summary.json | json_query('Countries[*].CountryCode') }}"
-        - "{{ country_summary.json | json_query('Countries[*].NewConfirmed') }}"
-        - "{{ country_summary.json | json_query('Countries[*].TotalConfirmed') }}"
-        - "{{ country_summary.json | json_query('Countries[*].NewDeaths') }}"
-        - "{{ country_summary.json | json_query('Countries[*].TotalDeaths') }}"
-        - "{{ country_summary.json | json_query('Countries[*].NewRecovered') }}"
-        - "{{ country_summary.json | json_query('Countries[*].TotalRecovered') }}"
+        - "{{ global_summary.json | json_query('Countries[*].Date') }}"        
+        - "{{ global_summary.json | json_query('Countries[*].Country') }}"
+        - "{{ global_summary.json | json_query('Countries[*].CountryCode') }}"
+        - "{{ global_summary.json | json_query('Countries[*].NewConfirmed') }}"
+        - "{{ global_summary.json | json_query('Countries[*].TotalConfirmed') }}"
+        - "{{ global_summary.json | json_query('Countries[*].NewDeaths') }}"
+        - "{{ global_summary.json | json_query('Countries[*].TotalDeaths') }}"
+        - "{{ global_summary.json | json_query('Countries[*].NewRecovered') }}"
+        - "{{ global_summary.json | json_query('Countries[*].TotalRecovered') }}"
       register: country_summary_loop_output
 
 # Create CSV file with results #
