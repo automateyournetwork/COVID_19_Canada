@@ -22,6 +22,7 @@
         var: item
       with_together: 
         - "{{ report.json | json_query('data[*].date') }}"
+        - "{{ report.json | json_query('data[*].change_cases') }}"        
       register: report_loop_output
 
 # Create CSV file with results #
