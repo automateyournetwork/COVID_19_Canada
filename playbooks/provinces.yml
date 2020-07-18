@@ -21,13 +21,13 @@
       debug:
         var: item
       with_together: 
-        - "{{ provinces.json | json_query('data[*].code') }}"
-        - "{{ provinces.json | json_query('data[*].name') }}"
-        - "{{ provinces.json | json_query('data[*].updated_at') }}"        
-        - "{{ provinces.json | json_query('data[*].population') }}"
-        - "{{ provinces.json | json_query('data[*].area') }}"
-        - "{{ provinces.json | json_query('data[*].gdp') }}"
-        - "{{ provinces.json | json_query('data[*].density') }}"
+        - "{{ provinces.json | json_query('[*].code') }}"
+        - "{{ provinces.json | json_query('[*].name') }}"
+        - "{{ provinces.json | json_query('[*].updated_at') }}"        
+        - "{{ provinces.json | json_query('[*].population') }}"
+        - "{{ provinces.json | json_query('[*].area') }}"
+        - "{{ provinces.json | json_query('[*].gdp') }}"
+        - "{{ provinces.json | json_query('[*].density') }}"
       register: provinces_loop_output
 
 # Create CSV file with results #
