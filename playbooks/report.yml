@@ -20,7 +20,7 @@
     - name: "Get Report Info"
       debug:
         var: item
-      with_items: 
+      with_list: 
         - "{{ report.json | json_query('data[*].date') }}"
       register: report_loop_output
 
