@@ -166,7 +166,7 @@
         insertbefore: BOF
         line: "{{ item.property }}"
       with_items:
-        - { property: '| ------------- | --------------- | ---------- | ------------ | ------------- |' }
+        - { property: '| ---- | ------- | ------------ | ------------- | --------------- | ---------- | ------------ | ------------- | --------------- |' }
         - { property: '| Date | Country | Country Code | New Confirmed | Total Confirmed | New Deaths | Total Deaths | New Recovered | Total Recovered |' }
 
 # Create Mind Map # 
