@@ -32,7 +32,7 @@
 
 # Create CSV file with results #
     - name: Create CSV
-      copy: content="{{ provinces_loop_output | json_query('results[ansible_loop.index].item') }}" dest=../reports/csv/provinces.csv
+      copy: content="{{ provinces_loop_output | json_query('results[*].item') }}" dest=../reports/csv/provinces.csv
 
 # Format CSV #
     - name: Format CSV File New Lines
