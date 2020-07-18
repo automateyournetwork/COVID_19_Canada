@@ -4,7 +4,7 @@
 
 # API Call using Ansible URI Module against https://api.covid19api.com/summary #
   tasks:
-    - name: GET Canada COVID 19 Summary
+    - name: GET Global COVID 19 Summary
       uri:
         url: https://api.covid19api.com/summary
         method: GET
