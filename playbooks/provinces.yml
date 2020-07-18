@@ -1,0 +1,96 @@
+---
+
+- hosts: localhost
+
+# API Call using Ansible URI Module against api.covid19tracker.ca/provinces #
+  tasks:
+    - name: GET Canada COVID 19 Provincial information
+      uri:
+        url: https://api.covid19tracker.ca/provinces
+        method: GET
+        headers: 
+          Connection: keep-alive
+          Accept: application/json 
+        return_content: yes
+        validate_certs: no
+        follow_redirects: yes
+      register: provinces
+
+# Nested Loop over JSON response and capture provinces info #
+    - name: "Get provinces Info"
+      debug:
+        var: item
+      with_together: 
+        - "{{ provinces.json | json_query('data[*].code') }}"
+        - "{{ provinces.json | json_query('data[*].name') }}"
+        - "{{ provinces.json | json_query('data[*].updated_at') }}"        
+        - "{{ provinces.json | json_query('data[*].population') }}"
+        - "{{ provinces.json | json_query('data[*].area') }}"
+        - "{{ provinces.json | json_query('data[*].gdp') }}"
+        - "{{ provinces.json | json_query('data[*].density') }}"
+      register: provinces_loop_output
+
+# Create CSV file with results #
+    - name: Create CSV
+      copy: content="{{ provinces_loop_output | json_query('results[ansible_loop.index].item') }}" dest=../reports/csv/provinces.csv
+
+# Format CSV #
+    - name: Format CSV File New Lines
+      replace:
+        path: ../reports/csv/provinces.csv
+        regexp: '],'
+        replace: ']\n'
+
+# Format CSV #
+    - name: Format CSV File Clean Up
+      replace:
+        path: ../reports/csv/provinces.csv
+        regexp: '\[|\]|"'
+        replace: ''
+
+# Add Header Row to CSV #
+    - name: Header Row
+      lineinfile:
+        path: ../reports/csv/provinces.csv
+        insertbefore: BOF
+        line: Code, Province, Last Updated, Population, Area, GDP, Density
+
+# Create Markdown file with results # 
+    - name: Create Markdown
+      copy: content="{{ provinces_loop_output | json_query('results[*].item') }}" dest=../reports/markdown/provinces.md
+
+# Format Markdown #
+    - name: Format Markdown File New Lines
+      replace:
+        path: ../reports/markdown/provinces.md
+        regexp: '],'
+        replace: ']\n'
+
+# Format Markdown #
+    - name: Format Markdown File Clean Up
+      replace:
+        path: ../reports/markdown/provinces.md
+        regexp: '\[|\]|"'
+        replace: ''      
+
+# Format Markdown #
+    - name: Format Markdown File Commas to Pipes
+      replace:
+        path: ../reports/markdown/provinces.md
+        regexp: ','
+        replace: ' | '
+
+# Add Header Rows to Markdown #
+    - name: Header Row
+      lineinfile:
+        path: ../reports/markdown/provinces.md
+        insertbefore: BOF
+        line: "{{ item.property }}"
+      with_items:
+        - { property: '| ---- | -------- | ------------ | ---------- | ---- | --- | ------- |' }
+        - { property: '| Code | Province | Last Updated | Population | Area | GDP | Density |' }
+
+# Create Mind Map # 
+    - name: create provinces Mind Map 
+      shell: "markmap --no-open ../reports/markdown/provinces.md -o ../reports/mindmap/provinces.html"
+      register: markmap
