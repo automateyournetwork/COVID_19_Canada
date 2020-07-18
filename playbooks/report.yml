@@ -21,7 +21,7 @@
       debug:
         var: item
       with_nested: 
-        - "{{ report.json | json_query('[*].date')  | flatten(levels=1) }}"
+        - "{{ report.json | json_query('data[*].date')  | flatten(levels=1) }}"
       register: report_loop_output
 
 # Create CSV file with results #
