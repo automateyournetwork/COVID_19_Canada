@@ -97,7 +97,7 @@
     - name: "Get by Country Summary Info"
       debug:
         var: item
-      with_nested:
+      with_together:
         - "{{ global_summary.json | json_query('Countries[*].Date') }}"        
         - "{{ global_summary.json | json_query('Countries[*].Country') }}"
         - "{{ global_summary.json | json_query('Countries[*].CountryCode') }}"
