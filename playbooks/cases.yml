@@ -37,14 +37,14 @@
 # Format CSV #
     - name: Format CSV File New Lines
       replace:
-        path: ../report/csv/cases.csv
+        path: ../reports/csv/cases.csv
         regexp: '],'
         replace: ']\n'
 
 # Format CSV #
     - name: Format CSV File Clean Up
       replace:
-        path: ../report/csv/cases.csv
+        path: ../reports/csv/cases.csv
         regexp: '\[|\]|"'
         replace: ''
 
