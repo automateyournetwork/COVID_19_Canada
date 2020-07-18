@@ -16,6 +16,9 @@
         follow_redirects: yes
       register: report
 
+    - debug:
+        msg: "{{ report }}"
+
 # Nested Loop over JSON response and capture report info #
     - name: "Get Report Info"
       debug:
