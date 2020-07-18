@@ -92,5 +92,5 @@
 
 # Create Mind Map # 
     - name: create cases Mind Map 
-      shell: "markmap --no-open ../report/markdown/cases.md -o ../reports/mindmap/cases.html"
+      shell: "markmap --no-open ../reports/markdown/cases.md -o ../reports/mindmap/cases.html"
       register: markmap
