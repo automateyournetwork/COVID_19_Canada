@@ -22,7 +22,18 @@
         var: item
       with_together: 
         - "{{ report.json | json_query('data[*].date') }}"
-        - "{{ report.json | json_query('data[*].change_cases') }}"        
+        - "{{ report.json | json_query('data[*].change_cases') }}"
+        - "{{ report.json | json_query('data[*].change_fatalities') }}"
+        - "{{ report.json | json_query('data[*].change_tests') }}"
+        - "{{ report.json | json_query('data[*].change_hospitalizations') }}"
+        - "{{ report.json | json_query('data[*].change_criticals') }}"
+        - "{{ report.json | json_query('data[*].change_recoveries') }}"        
+        - "{{ report.json | json_query('data[*].total_cases') }}"  
+        - "{{ report.json | json_query('data[*].total_fatalities') }}" 
+        - "{{ report.json | json_query('data[*].total_tests') }}"        
+        - "{{ report.json | json_query('data[*].total_hospitalizations') }}"          
+        - "{{ report.json | json_query('data[*].total_criticals') }}"        
+        - "{{ report.json | json_query('data[*].total_recoveries') }}"  
       register: report_loop_output
 
 # Create CSV file with results #
