@@ -1,0 +1,96 @@
+---
+
+- hosts: localhost
+
+# API Call using Ansible URI Module against api.covid19tracker.ca/report #
+  tasks:
+    - name: GET Canada COVID 19 Canadian cases
+      uri:
+        url: https://api.covid19tracker.ca/report
+        method: GET
+        headers: 
+          Connection: keep-alive
+          Accept: application/json 
+        return_content: yes
+        validate_certs: no
+        follow_redirects: yes
+      register: cases
+
+# Nested Loop over JSON response and capture cases info #
+    - name: "Get cases Info"
+      debug:
+        var: item
+      with_together: 
+        - "{{ cases.json | json_query('data[*].date') }}"
+        - "{{ cases.json | json_query('data[*].province') }}"
+        - "{{ cases.json | json_query('data[*].city') }}"
+        - "{{ cases.json | json_query('data[*].age') }}"
+        - "{{ cases.json | json_query('data[*].confirmed_presumptive') }}"
+        - "{{ cases.json | json_query('data[*].travel_history') }}"
+        - "{{ cases.json | json_query('data[*].source') }}"        
+      register: cases_loop_output
+
+# Create CSV file with results #
+    - name: Create CSV
+      copy: content="{{ cases_loop_output | json_query('results[*].item') }}" dest=../reports/csv/cases.csv
+
+# Format CSV #
+    - name: Format CSV File New Lines
+      replace:
+        path: ../report/csv/cases.csv
+        regexp: '],'
+        replace: ']\n'
+
+# Format CSV #
+    - name: Format CSV File Clean Up
+      replace:
+        path: ../report/csv/cases.csv
+        regexp: '\[|\]|"'
+        replace: ''
+
+# Add Header Row to CSV #
+    - name: Header Row
+      lineinfile:
+        path: ../reports/csv/cases.csv
+        insertbefore: BOF
+        line: Date, Province, City, Age, Confirmed Presumptive, Travel History, Source
+
+# Create Markdown file with results # 
+    - name: Create Markdown
+      copy: content="{{ cases_loop_output | json_query('results[*].item') }}" dest=../reports/markdown/cases.md
+
+# Format Markdown #
+    - name: Format Markdown File New Lines
+      replace:
+        path: ../reports/markdown/cases.md
+        regexp: '],'
+        replace: ']\n'
+
+# Format Markdown #
+    - name: Format Markdown File Clean Up
+      replace:
+        path: ../reports/markdown/cases.md
+        regexp: '\[|\]|"'
+        replace: ''      
+
+# Format Markdown #
+    - name: Format Markdown File Commas to Pipes
+      replace:
+        path: ../report/markdown/cases.md
+        regexp: ','
+        replace: ' | '
+
+# Add Header Rows to Markdown #
+    - name: Header Row
+      lineinfile:
+        path: ../report/markdown/cases.md
+        insertbefore: BOF
+        line: "{{ item.property }}"
+      with_items:
+        - { property: '| ---- | -------- | ---- | --- | --------------------- | -------------- | ------ |'}
+        - { property: '| Date | Province | City | Age | Confirmed Presumptive | Travel History | Source |'}
+
+# Create Mind Map # 
+    - name: create cases Mind Map 
+      shell: "markmap --no-open ../report/markdown/cases.md -o ../report/mindmap/cases.html"
+      register: markmap
