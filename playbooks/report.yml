@@ -20,12 +20,9 @@
     - name: "Get Report Info"
       debug:
         var: item
-      with_nested: 
+      with_items: 
         - "{{ report.json | json_query('data[*].date') }}"
       register: report_loop_output
-
-    - debug:
-        msg: " {{ report_loop_output }} "
 
 # Create CSV file with results #
     - name: Create CSV
