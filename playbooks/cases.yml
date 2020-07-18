@@ -6,7 +6,7 @@
   tasks:
     - name: GET Canada COVID 19 Canadian cases
       uri:
-        url: https://api.covid19tracker.ca/report
+        url: https://api.covid19tracker.ca/cases
         method: GET
         headers: 
           Connection: keep-alive
