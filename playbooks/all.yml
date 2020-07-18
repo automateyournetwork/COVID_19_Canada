@@ -1,0 +1,9 @@
+---
+
+- hosts: localhost
+
+- include: cases.yml
+- include: fatalities.yml
+- include: provinces.yml
+- include: report.yml
+- include: summary.yml
