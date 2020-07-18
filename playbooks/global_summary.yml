@@ -92,3 +92,84 @@
     - name: create Summary Mind Map 
       shell: "markmap --no-open ../reports/markdown/global_summary.md -o ../reports/mindmap/global_summary.html"
       register: markmap
+
+# Nested Loop over JSON response and capture summary info #
+    - name: "Get by Country Summary Info"
+      debug:
+        var: item
+      with_nested:
+        - "{{ country_summary.json | json_query('Countries[*].Date') }}"        
+        - "{{ country_summary.json | json_query('Countries[*].Country') }}"
+        - "{{ country_summary.json | json_query('Countries[*].CountryCode') }}"
+        - "{{ country_summary.json | json_query('Countries[*].NewConfirmed') }}"
+        - "{{ country_summary.json | json_query('Countries[*].TotalConfirmed') }}"
+        - "{{ country_summary.json | json_query('Countries[*].NewDeaths') }}"
+        - "{{ country_summary.json | json_query('Countries[*].TotalDeaths') }}"
+        - "{{ country_summary.json | json_query('Countries[*].NewRecovered') }}"
+        - "{{ country_summary.json | json_query('Countries[*].TotalRecovered') }}"
+      register: country_summary_loop_output
+
+# Create CSV file with results #
+    - name: Create CSV
+      copy: content="{{ country_summary_loop_output | json_query('results[*].item') }}" dest=../reports/csv/country_summary.csv
+
+# Format CSV #
+    - name: Format CSV File New Lines
+      replace:
+        path: ../reports/csv/country_summary.csv
+        regexp: '],'
+        replace: ']\n'
+
+# Format CSV #
+    - name: Format CSV File Clean Up
+      replace:
+        path: ../reports/csv/country_summary.csv
+        regexp: '\[|\]|"'
+        replace: ''
+
+# Add Header Row to CSV #
+    - name: Header Row
+      lineinfile:
+        path: ../reports/csv/country_summary.csv
+        insertbefore: BOF
+        line: Date, Country, Country Code, New Confirmed, Total Confirmed, New Deaths, Total Deaths, New Recovered, Total Recovered
+
+# Create Markdown file with results # 
+    - name: Create Markdown
+      copy: content="{{ country_summary_loop_output | json_query('results[*].item') }}" dest=../reports/markdown/country_summary.md
+
+# Format Markdown #
+    - name: Format Markdown File New Lines
+      replace:
+        path: ../reports/markdown/country_summary.md
+        regexp: '],'
+        replace: ']\n'
+
+# Format Markdown #
+    - name: Format Markdown File Clean Up
+      replace:
+        path: ../reports/markdown/country_summary.md
+        regexp: '\[|\]|"'
+        replace: ''      
+
+# Format Markdown #
+    - name: Format Markdown File Commas to Pipes
+      replace:
+        path: ../reports/markdown/country_summary.md
+        regexp: ','
+        replace: ' | '
+
+# Add Header Rows to Markdown #
+    - name: Header Row
+      lineinfile:
+        path: ../reports/markdown/country_summary.md
+        insertbefore: BOF
+        line: "{{ item.property }}"
+      with_items:
+        - { property: '| ------------- | --------------- | ---------- | ------------ | ------------- |' }
+        - { property: '| Date | Country | Country Code | New Confirmed | Total Confirmed | New Deaths | Total Deaths | New Recovered | Total Recovered |' }
+
+# Create Mind Map # 
+    - name: create Summary Mind Map 
+      shell: "markmap --no-open ../reports/markdown/country_summary.md -o ../reports/mindmap/country_summary.html"
+      register: markmap      
