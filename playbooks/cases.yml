@@ -76,14 +76,14 @@
 # Format Markdown #
     - name: Format Markdown File Commas to Pipes
       replace:
-        path: ../report/markdown/cases.md
+        path: ../reports/markdown/cases.md
         regexp: ','
         replace: ' | '
 
 # Add Header Rows to Markdown #
     - name: Header Row
       lineinfile:
-        path: ../report/markdown/cases.md
+        path: ../reports/markdown/cases.md
         insertbefore: BOF
         line: "{{ item.property }}"
       with_items:
@@ -92,5 +92,5 @@
 
 # Create Mind Map # 
     - name: create cases Mind Map 
-      shell: "markmap --no-open ../report/markdown/cases.md -o ../report/mindmap/cases.html"
+      shell: "markmap --no-open ../report/markdown/cases.md -o ../reports/mindmap/cases.html"
       register: markmap
