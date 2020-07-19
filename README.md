@@ -133,6 +133,13 @@ $ sudo npm install markmap-lib -g
 
 chmod -R 755 /home/"username"/COVID_19_Canada
 
+3. Ubuntu Bug fix 
+
+To work around a bug that prevents the Ansible playbook from running on certain versions of Ubuntu please run the following:
+
+sudo mv /usr/bin/sleep /usr/bin/sleep.dist
+sudo ln -s /bin/true /usr/bin/sleep
+
 ## Run the playbook(s)
 
 cd COVID_19_Canada/playbooks
