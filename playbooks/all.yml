@@ -2,8 +2,9 @@
 
 - hosts: localhost
 
-- include: cases.yml
-- include: fatalities.yml
-- include: provinces.yml
-- include: report.yml
-- include: summary.yml
+- import_playbook: cases.yml
+- import_playbook: fatalities.yml
+- import_playbook: provinces.yml
+- import_playbook: report.yml
+- import_playbook: summary.yml
+- import_playbook: global_summary.yml

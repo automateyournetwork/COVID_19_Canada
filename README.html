@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/d3@5"></script><script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.6.1/dist/view.min.js"></script>
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script>markmap.markmap('svg#mindmap',{"t":"heading","d":1,"v":"COVID_19_Canada","c":[{"t":"heading","d":2,"v":"Instructions for Linux users","c":[{"t":"heading","d":3,"v":"Linux prequisites","c":[{"t":"heading","d":4,"v":"Install steps - CentOS","c":[{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Update yum"}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Install Ansible"}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Install node.js 12"}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Install Mark Map"}]}]},{"t":"heading","d":4,"v":"Install steps - Ubuntu","c":[{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Update Ubuntu - this step will take some time."}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Make sure Python is installed."}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Install Ansible."}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Install node.js"}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Install Mark Map"}]}]}]}]},{"t":"heading","d":2,"v":"Instructions for Windows Users","c":[{"t":"heading","d":3,"v":"Windows Prequisites","c":[{"t":"heading","d":4,"v":"Install Steps - Windows 10","c":[{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Right-click the Windows Start icon - select Apps and Features."}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"In the Apps and Features window - click Programs and Features under Related Settings on the right side of Apps and Features."}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Click Turn Windows Features On or Off in the left (with the shield icon) side of the Programs and Features window."}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Scroll to bottom of the Features window and put a check mark beside Windows Subsytem for Linux; Click Ok and close the open windows."}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Launch the Microsoft Store."}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Search for Ubuntu - click the first result."}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Click Install."}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"list_item","d":6,"v":"8. Wait for Ubuntu to install."},{"t":"list_item","d":6,"v":"9. Press Windows Key and start typing Ubuntu - click and launch Ubuntu."},{"t":"list_item","d":6,"v":"10. The first time Ubuntu launches it has to setup - give this some time."},{"t":"list_item","d":6,"v":"11. Enter your username and password for Ubuntu."},{"t":"list_item","d":6,"v":"12. Update Ubuntu - this step will take some time."}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Make sure Python is installed."}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Install Ansible."}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Install node.js."}]},{"t":"ordered_list","d":5,"v":"","c":[{"t":"paragraph","d":6,"v":"Install Mark Map."}]}]}]}]},{"t":"heading","d":2,"v":"Clone the repository","c":[{"t":"ordered_list","d":3,"v":"","c":[{"t":"list_item","d":4,"v":"1. git clone https://github.com/automateyournetwork/COVID_19_Canada.git"},{"t":"list_item","d":4,"v":"2. Modify the permissions"}]},{"t":"ordered_list","d":3,"v":"","c":[{"t":"paragraph","d":4,"v":"Ubuntu Bug fix"}]}]},{"t":"heading","d":2,"v":"Run the playbook(s)","c":[{"t":"heading","d":3,"v":"All Playbooks"},{"t":"heading","d":3,"v":"Select Playbooks"}]},{"t":"heading","d":2,"v":"Review the reports"}]}).fit()</script>
+</body>
+</html>
