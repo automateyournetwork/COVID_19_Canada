@@ -127,7 +127,11 @@ $ sudo npm install markmap-lib -g
 
 ## Clone the repository
 
-git clone https://github.com/automateyournetwork/COVID_19_Canada.git
+1. git clone https://github.com/automateyournetwork/COVID_19_Canada.git
+
+2. Modify the permissions 
+
+chmod -R 755 /home/"username"/COVID_19_Canada
 
 ## Run the playbook(s)
 
